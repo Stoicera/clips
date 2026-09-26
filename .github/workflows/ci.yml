@@ -41,7 +41,7 @@ jobs:
 
       # Python
       - if: steps.stack.outputs.python == 'true'
-        uses: astral-sh/setup-uv@v10
+        uses: astral-sh/setup-uv@v7
       - if: steps.stack.outputs.python == 'true'
         run: |
           uv sync --frozen
