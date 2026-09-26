@@ -1,0 +1,57 @@
+# .github/workflows/deploy.yml — main → production via Coolify (ai/ENGINEERING.md §7).
+# Inactive until the repository variable COOLIFY_APP_UUID is set; then: backup, image, deploy,
+# health check, smoke test, rollback on failure. Source: SSOT ai/config/deploy.yml.
+name: Deploy
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency: { group: deploy-production, cancel-in-progress: false }
+
+jobs:
+  deploy:
+    if: vars.COOLIFY_APP_UUID != ''
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Backup database before deploy
+        if: vars.DB_CONTAINER != ''
+        run: |
+          ssh -o StrictHostKeyChecking=accept-new deploy@${{ secrets.PROD_HOST }} \
+            "docker exec ${{ vars.DB_CONTAINER }} pg_dump -U app -Fc app > /backups/pre-deploy-$(date +%F-%H%M).dump"
+
+      - name: Build and push image
+        run: |
+          echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker build -t ghcr.io/stoicera/${{ vars.APP }}:${{ github.sha }} -t ghcr.io/stoicera/${{ vars.APP }}:latest .
+          docker push ghcr.io/stoicera/${{ vars.APP }} --all-tags
+
+      - name: Trigger Coolify deployment
+        run: |
+          curl -fsS -X POST "${{ vars.COOLIFY_URL }}/api/v1/deploy?uuid=${{ vars.COOLIFY_APP_UUID }}&force=true" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}"
+
+      - name: Wait for health
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS "${{ vars.PROD_URL }}/api/health" | grep -q '"ok"'; then exit 0; fi
+            sleep 10
+          done
+          echo "health check failed"; exit 1
+
+      - name: Smoke tests against production
+        if: hashFiles('playwright.prod.config.ts') != ''
+        run: pnpm dlx playwright test tests/smoke --config playwright.prod.config.ts
+        env: { BASE_URL: "${{ vars.PROD_URL }}" }
+
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          curl -fsS -X POST "${{ vars.COOLIFY_URL }}/api/v1/applications/${{ vars.COOLIFY_APP_UUID }}/rollback" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}" || true
+          gh issue create --title "Deploy ${{ github.sha }} failed and was rolled back" \
+            --body "See run ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" --label prio:p0
+        env: { GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}" }
