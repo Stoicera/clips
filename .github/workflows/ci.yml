@@ -17,7 +17,7 @@ jobs:
     env:
       CI: true
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - id: stack
         run: |
           [ -f package.json ] && echo node=true >> "$GITHUB_OUTPUT" || true
@@ -26,9 +26,9 @@ jobs:
 
       # Node / TypeScript
       - if: steps.stack.outputs.node == 'true'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
       - if: steps.stack.outputs.node == 'true'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with: { node-version: 22, cache: pnpm }
       - if: steps.stack.outputs.node == 'true'
         run: |
@@ -41,7 +41,7 @@ jobs:
 
       # Python
       - if: steps.stack.outputs.python == 'true'
-        uses: astral-sh/setup-uv@v6
+        uses: astral-sh/setup-uv@v10
       - if: steps.stack.outputs.python == 'true'
         run: |
           uv sync --frozen
@@ -54,7 +54,7 @@ jobs:
       - if: steps.stack.outputs.docker == 'true'
         run: docker build -t app:${{ github.sha }} .
       - if: steps.stack.outputs.docker == 'true'
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: app:${{ github.sha }}
           severity: HIGH,CRITICAL
