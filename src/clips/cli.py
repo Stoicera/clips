@@ -26,9 +26,9 @@ from clips.transcript import to_markdown, to_srt
 class Job:
     """Paths and cached artefacts of one recording."""
 
-    def __init__(self, source: Path, out_root: Path, force: bool) -> None:
+    def __init__(self, source: Path, out_root: Path, force: set[str]) -> None:
         self.source = source
-        self.force = force
+        self.force = force  # stage names whose artefacts are recomputed
         slug = media.slugify(source.stem)
         self.dir = out_root / f"{dt.date.today().isoformat()}_{slug}"
         self.dir.mkdir(parents=True, exist_ok=True)
@@ -38,8 +38,8 @@ class Job:
     def path(self, name: str) -> Path:
         return self.dir / name
 
-    def fresh(self, name: str) -> bool:
-        return self.force or not self.path(name).exists()
+    def fresh(self, name: str, stage: str) -> bool:
+        return stage in self.force or not self.path(name).exists()
 
     def read_json(self, name: str) -> dict:
         return json.loads(self.path(name).read_text(encoding="utf-8"))
@@ -52,7 +52,7 @@ class Job:
 
 
 def stage_transcribe(job: Job, cfg: Config) -> dict:
-    if not job.fresh("transcript.json"):
+    if not job.fresh("transcript.json", "transcribe"):
         print(f"transcript.json exists, reused ({job.path('transcript.json')})")
         return job.read_json("transcript.json")
     media.require("ffmpeg", "ffprobe")
@@ -83,7 +83,7 @@ def _candidates(raw: dict) -> tuple[list[Candidate], list[dict]]:
 
 
 def stage_select(job: Job, cfg: Config, tr: dict) -> list[dict]:
-    if not job.fresh("clips.json"):
+    if not job.fresh("clips.json", "select"):
         print("clips.json exists, reused")
         return job.read_json("clips.json")["clips"]
     sentences = tr["sentences"]
@@ -126,7 +126,7 @@ def stage_render(
         name = f"{clip['index']:02d}_{media.slugify(clip['title'])}"
         ass_file = job.path(f"clips/{name}.ass")
         mp4 = job.path(f"clips/{name}.mp4")
-        if job.fresh(f"clips/{name}.ass"):
+        if job.fresh(f"clips/{name}.ass", "render"):
             cues = build_cues(_words_in(tr, clip["start"], clip["end"]), offset=clip["start"])
             ass_file.write_text(
                 to_ass(
@@ -140,7 +140,7 @@ def stage_render(
                 ),
                 encoding="utf-8",
             )
-        if job.fresh(f"clips/{name}.mp4"):
+        if job.fresh(f"clips/{name}.mp4", "render"):
             print(f"rendering {name} ({clip['duration']:.1f} s) …")
             render_clip(
                 job.source,
@@ -175,7 +175,7 @@ def _check(mp4: Path, cfg: Config) -> dict:
 
 
 def stage_captions(job: Job, cfg: Config, clips: list[dict]) -> None:
-    if not job.fresh("captions.md"):
+    if not job.fresh("captions.md", "captions"):
         print("captions.md exists, reused")
         return
     print(f"writing captions.md with {cfg.model.provider} / {cfg.model.name} …")
@@ -256,7 +256,11 @@ def build_parser() -> argparse.ArgumentParser:
         type=Path,
         help="clips.toml (default: ./clips.toml or ~/.config/clips/clips.toml)",
     )
-    ap.add_argument("--force", action="store_true", help="recompute even if artefacts exist")
+    ap.add_argument(
+        "--force",
+        action="store_true",
+        help="recompute the requested stage even if its artefacts exist (run: every stage)",
+    )
     ap.add_argument(
         "--crop", default="auto", help="auto | none | x:y:w:h (speaker region in the source)"
     )
@@ -281,7 +285,8 @@ def main(argv: list[str] | None = None) -> int:
 def _main(args: argparse.Namespace) -> int:
     cfg = load_config(args.config)
     out_root = Path(args.out).expanduser().resolve()
-    job = Job(_resolve_source(args.input, out_root), out_root, args.force)
+    forced = {"transcribe", "select", "render", "captions"} if args.stage == "run" else {args.stage}
+    job = Job(_resolve_source(args.input, out_root), out_root, forced if args.force else set())
     print(f"→ {job.dir}")
     tr = stage_transcribe(job, cfg)
     if args.stage == "transcribe":

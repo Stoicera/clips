@@ -20,10 +20,17 @@ class ModelConfig:
     base_url: str = (
         ""  # openrouter: https://openrouter.ai/api/v1 · ollama: http://localhost:11434/v1
     )
-    api_key_env: str = "ANTHROPIC_API_KEY"
+    api_key_env: str = (
+        ""  # default per provider: ANTHROPIC_API_KEY · OPENROUTER_API_KEY · OPENAI_API_KEY
+    )
     effort: str = "medium"  # anthropic only: low | medium | high | xhigh | max
     workspace_id: str = ""  # anthropic only: needed when the key is not scoped to a workspace
     max_tokens: int = 16000
+
+    @property
+    def key_env(self) -> str:
+        defaults = {"anthropic": "ANTHROPIC_API_KEY", "openrouter": "OPENROUTER_API_KEY"}
+        return self.api_key_env or defaults.get(self.provider, "OPENAI_API_KEY")
 
 
 @dataclass

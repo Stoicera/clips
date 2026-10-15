@@ -69,11 +69,11 @@ The model is one line:
 [model]
 provider = "anthropic"            # anthropic | openrouter | openai-compatible
 name = "claude-opus-5-5"
-api_key_env = "ANTHROPIC_API_KEY"
 ```
 
-OpenRouter: `provider = "openrouter"`, `name = "anthropic/claude-opus-5.5"`,
-`api_key_env = "OPENROUTER_API_KEY"`. Local (Ollama, LM Studio): `provider = "openai-compatible"`,
+The key is read from `ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY` or `OPENAI_API_KEY` depending on the
+provider; `api_key_env` names another variable. OpenRouter: `provider = "openrouter"`,
+`name = "anthropic/claude-opus-5.5"`. Local (Ollama, LM Studio): `provider = "openai-compatible"`,
 `base_url = "http://localhost:11434/v1"`, `name = "qwen3:14b"`, no key.
 Environment variables override the file: `CLIPS_MODEL_PROVIDER`, `CLIPS_MODEL_NAME`,
 `CLIPS_MODEL_BASE_URL`, `CLIPS_MODEL_API_KEY_ENV`, `ANTHROPIC_WORKSPACE_ID`,
@@ -87,7 +87,8 @@ export ANTHROPIC_API_KEY="$(op read 'op://Agents/<item>/credential')"
 
 ## The four stages
 
-`clips run` does all four. Each can run alone; artefacts that exist are reused unless `--force`.
+`clips run` does all four. Each can run alone; artefacts that exist are reused. `--force` recomputes
+the stage you asked for (with `run`: all of them).
 
 | Command | Does | Writes |
 |---|---|---|

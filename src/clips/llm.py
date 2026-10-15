@@ -30,11 +30,9 @@ def complete(cfg: ModelConfig, system: str, user: str) -> str:
 
 
 def _api_key(cfg: ModelConfig, required: bool) -> str:
-    key = os.environ.get(cfg.api_key_env, "")
+    key = os.environ.get(cfg.key_env, "")
     if required and not key:
-        raise ModelError(
-            f"environment variable {cfg.api_key_env} is empty (provider {cfg.provider})"
-        )
+        raise ModelError(f"environment variable {cfg.key_env} is empty (provider {cfg.provider})")
     return key
 
 

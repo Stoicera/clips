@@ -73,3 +73,12 @@ def test_pre_gain_adds_headroom_and_limits_at_true_peak():
     assert f.startswith("volume=5.40dB,alimiter=limit=0.8414")
     assert pre_gain_filter(RenderConfig(), raw_input_i=-13.5) is None
     assert "volume=20.00dB" in pre_gain_filter(RenderConfig(), raw_input_i=-60.0)
+
+
+def test_key_env_follows_provider_unless_named(tmp_path: Path):
+    from clips.config import ModelConfig
+
+    assert ModelConfig().key_env == "ANTHROPIC_API_KEY"
+    assert ModelConfig(provider="openrouter").key_env == "OPENROUTER_API_KEY"
+    assert ModelConfig(provider="openai-compatible").key_env == "OPENAI_API_KEY"
+    assert ModelConfig(provider="openrouter", api_key_env="MY_KEY").key_env == "MY_KEY"
