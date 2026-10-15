@@ -1,0 +1,33 @@
+# clips.toml — copy to the working directory or to ~/.config/clips/clips.toml.
+# Every value here is optional; environment variables override (see README).
+
+[model]
+# Which model picks the clips and writes the texts. Swap here, never in code.
+provider = "anthropic"          # anthropic | openrouter | openai-compatible
+name = "claude-opus-5-5"        # openrouter: "anthropic/claude-opus-5.5" · ollama: "qwen3:14b"
+# base_url = "http://localhost:11434/v1"   # openai-compatible only (Ollama, LM Studio)
+api_key_env = "ANTHROPIC_API_KEY"          # name of the env var holding the key
+effort = "medium"               # anthropic only: low | medium | high | xhigh | max
+# workspace_id = ""             # anthropic only, if the key is not scoped to a workspace
+
+[whisper]
+backend = "whisper-cpp"         # whisper-cpp | faster-whisper
+model = "large-v3-turbo"        # whisper-cpp: ggml-<model>.bin in model_dir, downloaded once
+model_dir = "~/.cache/clips/models"
+language = "de"
+threads = 4
+
+[render]
+crf = 20
+font = "Inter"
+font_size = 64
+safe_top = 240
+safe_bottom = 420
+title_card = true
+title_seconds = 2.0
+
+[clips]
+min_clip_seconds = 20
+max_clip_seconds = 60
+min_clips = 5
+max_clips = 8
