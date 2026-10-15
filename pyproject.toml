@@ -1,0 +1,54 @@
+[project]
+name = "clips"
+version = "0.1.0"
+description = "Turns one long recording into short vertical clips with burnt-in subtitles, an SRT file and platform texts. Local only."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = [
+    # Official Anthropic SDK: provider "anthropic" (thinking, refusal handling, retries come built in).
+    "anthropic>=1.0,<2",
+    # Fetches a YouTube URL as input; pure Python, pinned to the yt-dlp release line.
+    "yt-dlp>=2025.1",
+]
+
+[project.optional-dependencies]
+# Alternative transcription backend for machines without whisper.cpp (CTranslate2, CPU/CUDA).
+faster-whisper = ["faster-whisper>=1.1"]
+
+[project.scripts]
+clips = "clips.cli:main"
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+    "pytest-cov>=6",
+    "ruff>=0.8",
+    "pip-audit>=2.7",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/clips"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "C90"]
+[tool.ruff.lint.mccabe]
+max-complexity = 8
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.coverage.run]
+source = ["clips"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/clips/prompts.py" = ["E501"]

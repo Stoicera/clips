@@ -1,0 +1,191 @@
+{
+ "source": "~/Work/stoicera/clips/in/testaufnahme-v01.mp4",
+ "clips": [
+  {
+   "index": 1,
+   "start": 40.59,
+   "end": 80.9,
+   "title": "Bitkom 2026: mindestens 160 Mrd. Euro Schaden",
+   "hook": "Der Branchenverband Bitkom hat im August 2026 rund 1000 Unternehmen in Deutschland befragt, ab 10 Beschäftigten.",
+   "thesis": "Cyberangriffe verursachen der deutschen Wirtschaft laut Bitkom-Hochrechnung vom August 2026 mindestens 160 Milliarden Euro Schaden in zwölf Monaten.",
+   "why": "Quelle, Datum, Bandbreite und Einordnung als Schätzung stehen vollständig im Clip.",
+   "text": "Der Branchenverband Bitkom hat im August 2026 rund 1000 Unternehmen in Deutschland befragt, ab 10 Beschäftigten. Hochgerechnet entstanden der deutschen Wirtschaft durch Cyberangriffe in zwölf Monaten Schäden von mindestens 160 Milliarden Euro. Mindestens, weil es eine Hochrechnung aus einer Umfrage ist. Der Korridor reicht von rund 160 bis rund 206 Milliarden. Der Gesamtschaden in derselben Studie liegt bei 211 bis 271 Milliarden. Cyberangriffe sind davon etwa drei Viertel. Das ist keine Messung am Konto, das ist eine Schätzung mit Bandbreite.",
+   "sentences": [
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17
+   ],
+   "duration": 40.31
+  },
+  {
+   "index": 2,
+   "start": 82.89,
+   "end": 108.54,
+   "title": "Österreich: Cybercrime-Anzeigen versechsfacht",
+   "hook": "In Österreich zählt das Bundeskriminalamt Anzeigen.",
+   "thesis": "Die Cybercrime-Anzeigen in Österreich stiegen von rund 10.000 im Jahr 2014 auf 63.459 im Jahr 2025 und bleiben seit 2023 hoch.",
+   "why": "Land, Quelle und alle Zahlen mit Jahr werden genannt, ein Vorwissen ist nicht nötig.",
+   "text": "In Österreich zählt das Bundeskriminalamt Anzeigen. 2025 waren es 63.459 Cybercrime-Anzeigen. 2014 waren es rund 10.000. Mehr als sechsmal so viele in elf Jahren. Seit 2023 liegt die Zahl zwischen 62.000 und 66.000, also hoch und stabil.",
+   "sentences": [
+    19,
+    20,
+    21,
+    22
+   ],
+   "duration": 25.65
+  },
+  {
+   "index": 3,
+   "start": 130.17,
+   "end": 166.34,
+   "title": "Ransomware trifft vor allem KMU",
+   "hook": "Ransomware heißt, die Daten werden verschlüsselt, und für den Schlüssel wird Lösegeld verlangt.",
+   "thesis": "Laut Bundeslagebild Cybercrime 2025 des BKA trafen rund 90% der 1041 angezeigten Ransomware-Angriffe kleine und mittlere Unternehmen, zu klein ist also kein Betrieb.",
+   "why": "Der Clip erklärt den Begriff, nennt Quelle, Jahr und Zahl, grenzt die Zahl auf Deutschland ein und schließt mit der Kernaussage.",
+   "text": "Ransomware heißt, die Daten werden verschlüsselt, und für den Schlüssel wird Lösegeld verlangt. Dafür gibt es eine Zahl aus Deutschland, aus dem Bundeslagebild Cybercrime 2025 des BKA. Dort wurden 1041 Ransomware-Angriffe angezeigt. Angezeigt? Die Dunkelziffer kennt niemand. Rund 90% davon trafen kleine und mittlere Unternehmen. 9 von 10. Für Österreich gibt es diese Aufteilung nicht. Deshalb sage ich es klar dazu, das ist eine deutsche Zahl. Zu klein ist dein Betrieb dafür nicht.",
+   "sentences": [
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36
+   ],
+   "duration": 36.17
+  },
+  {
+   "index": 4,
+   "start": 230.27,
+   "end": 256.46,
+   "title": "Lockbit: 80 Prozent des Lösegelds für Affiliates",
+   "hook": "Wie das Geld verteilt wird, weiß man von Lockbit.",
+   "thesis": "Die Anklage des US-Justizministeriums vom Mai 2024 zeigt, dass Ransomware ein Auftragsgeschäft mit gemieteter Software ist.",
+   "why": "Der Clip erklärt Lockbit selbst, nennt Quelle und Datum und begrenzt die Aussage ausdrücklich auf Lockbit.",
+   "text": "Wie das Geld verteilt wird, weiß man von Lockbit. Das war so eine Plattform. Das US-Justizministerium hat im Mai 2024 Anklage erhoben und die Aufteilung genannt. Die Affiliates behielten 80% des Lösegelds, die Entwickler zwanzigsten das gilt für Lockbit, nicht für die ganze Branche. Aber es zeigt das Modell, der Angriff ist ein Auftrag, die Software ist gemietet.",
+   "sentences": [
+    60,
+    61,
+    62,
+    63,
+    64
+   ],
+   "duration": 26.19
+  },
+  {
+   "index": 5,
+   "start": 262.97,
+   "end": 293.12,
+   "title": "Eine Mauer reicht nicht",
+   "hook": "Mehrere Schichten statt einer Mauer.",
+   "thesis": "Ein einzelner Schutzwall hat genau einen Schwachpunkt, mehrere Schichten machen jeden Angriff aufwendiger.",
+   "why": "Der Clip enthält die als solche gekennzeichnete Beobachtung aus Projekten und braucht keinen Bezug auf das Bild.",
+   "text": "Mehrere Schichten statt einer Mauer. Früher galt, eine Mauer um alles. Eine Firewall, ein Virenscanner, fertig. Das sehe ich heute noch in vielen Betrieben. Das ist meine Beobachtung aus Projekten, keine Statistik. Das Problem, eine Mauer hat genau einen Schwachpunkt. Ist sie an einer Stelle durch, liegt alles offen. Der Broker braucht genau eine Lücke. Bei mehreren Schichten kann der Angriff an der nächsten Schicht enden. Keine hält immer, aber jede kostet Aufwand.",
+   "sentences": [
+    67,
+    68,
+    69,
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76
+   ],
+   "duration": 30.15
+  },
+  {
+   "index": 6,
+   "start": 392.99,
+   "end": 428.96,
+   "title": "Wie Zugriffsrechte unbemerkt wachsen",
+   "hook": "Nur die Rechte, die die Aufgabe braucht.",
+   "thesis": "Rechte sammeln sich bei Stellenwechseln an, deshalb sollte man einmal im Jahr prüfen, wer was noch braucht.",
+   "why": "Der beobachtete Ablauf vom Vertrieb bis zur Leitung ist in sich geschlossen und endet mit der Gegenmaßnahme.",
+   "text": "Nur die Rechte, die die Aufgabe braucht. Ein Muster, das ich oft sehe, jemand fängt im Vertrieb an und bekommt die Rechte für den Vertrieb. Dann wechselt er ins Produkt, neue Rechte dazu, die alten bleiben. Dann in die Leitung, wieder neue dazu. Nach dem dritten Wechsel hat diese Person die Rechte von drei Stellen. Niemand hat das entschieden, es ist gewachsen. Das heißt Privilege kriebt. Wird dieses Konto übernommen, hat der Angreifer drei Stellen auf einmal. Die Gegenmaßnahme ist unspektakulär, einmal im Jahr prüfen, wer was noch braucht. Alles andere weg.",
+   "sentences": [
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115
+   ],
+   "duration": 35.97
+  },
+  {
+   "index": 7,
+   "start": 510.57,
+   "end": 555.92,
+   "title": "Strenge Passwortregeln erzeugen schwache Passwörter",
+   "hook": "Einfach für dich, aufwendig für den Angreifer.",
+   "thesis": "Komplexe Vorgaben schwächen die Sicherheit, weil Menschen Umwege bauen.",
+   "why": "Das konkrete Passwortbeispiel trägt die These vollständig und braucht keinen Bezug auf frühere Teile.",
+   "text": "Einfach für dich, aufwendig für den Angreifer. Nimm Passwortregeln als Beispiel. Eine strenge Vorgabe, sagen wir 14 Zeichen, Sonderzeichen, alle 30 Tage neu. Was passiert? Frühling 2024, Rufzeichen. Frühling 2025, Rufzeichen. Frühling 2026, Rufzeichen. Erfüllt jede Vorgabe, klebt unter der Tastatur und ist leicht zu erraten. Die Vorgabe war streng, das Ergebnis ist schwach. Komplexität schwächt Sicherheit, weil Menschen Umwege bauen. Ein gutes System ist für dich einfach, ein Passwortmanager, ein zweiter Faktor, fertig. Der Aufwand liegt dann beim Angreifer, nicht bei dir.",
+   "sentences": [
+    138,
+    139,
+    140,
+    141,
+    142,
+    143,
+    144,
+    145,
+    146,
+    147,
+    148,
+    149
+   ],
+   "duration": 45.35
+  }
+ ],
+ "rejected": [],
+ "dropped_by_model": [
+  {
+   "start_sentence": 23,
+   "end_sentence": 24,
+   "reason": "Aufklärungsquote 30,8% für 2025 ist mit Datum belegt, der Bereich ist aber nur etwa 8 Sekunden lang. Strecken würde eine zweite These hinzufügen."
+  },
+  {
+   "start_sentence": 38,
+   "end_sentence": 58,
+   "reason": "Die Erklärung der Arbeitsteilung enthält weder eine Zahl mit Datum noch einen konkreten Befund und verweist auf die Zeichnung."
+  },
+  {
+   "start_sentence": 83,
+   "end_sentence": 93,
+   "reason": "Das Rechenbeispiel beruht auf einer Annahme und ist ausdrücklich kein Messwert, also weder Zahl mit Messdatum noch Befund."
+  },
+  {
+   "start_sentence": 119,
+   "end_sentence": 128,
+   "reason": "Separation of Duties wird als Regel mit hypothetischem Beispiel erklärt, ein konkreter Befund fehlt."
+  },
+  {
+   "start_sentence": 130,
+   "end_sentence": 136,
+   "reason": "Die Aussage, viele Betriebe dächten erst im Test an Sicherheit, ist weder belegt noch als Beobachtung gekennzeichnet. Der Befund ist zu schwach."
+  },
+  {
+   "start_sentence": 163,
+   "end_sentence": 165,
+   "reason": "Werbeaufruf für den Selbstcheck, keine These."
+  },
+  {
+   "start_sentence": 0,
+   "end_sentence": 0,
+   "reason": "Das Transkript ist verstümmelt (Regieanweisung vermischt mit Text), der Satz ist nicht verwendbar."
+  }
+ ]
+}

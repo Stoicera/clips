@@ -7,28 +7,30 @@ Two founders (Sebastian Kern, Raphael Lugmayr), Upper Austria. Brands: Stoicera 
 
 ## What Clips is
 
-See `docs/00_ssot.md`. One sentence here: turns long-form videos into short clips with transcripts and titles, for the Stoicera channels.
-Non-goals: <three bullets>.
-Active PRD: `docs/prd/NN_*.md` — read before building.
+One sentence: turns one long recording into 5–8 vertical clips with burnt-in subtitles, an SRT file and platform texts, for the Stoicera channels (K7). Spec: SSOT `ai/prompts/video-to-clips.md`; how it works: `README.md`.
+Non-goals:
+- Posting, scheduling or uploading anything — a human posts natively.
+- Any cloud processing of faces or voices — whisper.cpp and ffmpeg run locally; only transcript text reaches the configured model.
+- A video editor — fine cutting is DaVinci Resolve's job; this repo produces the 80 % version.
+No PRD yet; the SSOT prompt is the spec.
 
 ## How we work here
 
 - Work = GitHub issue. Questions as issue comments, not chat.
 - Fresh git worktree per task from `origin/main` (never build on main), PR against `main` with `Closes #NN` and the template Intent · Gherkin · Evidence · Debt taken · Open. Small PRs. CI green before PR. Full loop: `ai/prompts/factory-feature.md`.
-- Build: `<cmd>` · Test: `<cmd>` · Lint/Typecheck: `<cmd>` · Migrate: `<cmd>`
-- Deploy: push to `main` → GitHub Actions → Coolify (`<app name>`) → smoke test → Sentry check. PostHog receives events from `main` (big products). Rollback: `<cmd>`.
-- Preview per PR at `<pattern>`.
+- Build: `uv sync --all-groups` · Test: `uv run pytest --cov` · Lint: `uv run ruff check . && uv run ruff format --check .` · all three: `just test`. Migrate: none (no database).
+- Deploy: none. This is a local command-line tool; `deploy.yml` stays inactive (no `COOLIFY_APP_UUID`). Gate: `direct`.
+- Preview: none. Evidence per PR is a rendered run (`report.md`, frames of clip 01).
 - Before you request review: check the result against the intent, fix deviations yourself. Copilot review runs automatically on every PR; a second model reviews security.
 - Decisions with reach → `docs/decisions/` (ADR, one page). Cycle memo → `docs/cycles/`.
 - After any production change: append one line to `ops/runlog.md` (date · agent · what · rollback).
 
 ## Conventions
 
-- Stack: <Next.js 15, TypeScript strict, Prisma, PostgreSQL 17, Tailwind, shadcn/ui>.
-- Money in cents (integer), time zone Europe/Vienna, tenant id on every table.
+- Stack: Python 3.11+, uv, ruff (complexity ≤ 8), pytest; ffmpeg with libass, whisper.cpp; the model behind `clips.llm.complete` is swapped in `clips.toml`, never in code.
+- Times in seconds (float) everywhere; file names `NN_<slug>`; German output, English code.
 - No new dependency without one sentence of justification in the PR. No speculative abstractions.
-- Tests: unit for logic, integration for API, one E2E per critical path. Synthetic data only.
-- Accessibility and Lighthouse ≥ 90 on public pages are merge gates.
+- Tests: unit for the cutting and caption logic; nothing in `tests/` needs a network, a model or ffmpeg. Synthetic recordings only (`scripts/testaufnahme.py`); never a real recording in the repo.
 
 ## Never
 
